@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="wrap">
+  <div [ngClass]="customClass || 'defaultClass'">
     <div class="header">
       <div>Online help</div>
     </div>
@@ -8,20 +8,19 @@
         <div class="inner-title">Ask please what do you want?</div>
         <div class="items">
           <ul>
-            <li class="item" *ngFor="let item of questions">
-              <input name="question" type="radio" id="{{item.id}}" (click)="setQuestion(item.item)">
-              <label for="{{item.id}}">{{item.question}}</label>
+            <li class="item" *ngFor="let item of titleList">
+              <span [id]="item.id" (click)="setTitle(item.item, item.answer)">{{item.title}}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="inner" *ngIf="showFinish">
         <div class="inner-title">Your anser will be here</div>
+        <div>{{answer}}</div>
       </div>
     </div>
     <div class="navigations">
-      <button *ngIf="showPrev" class="btn-prev">Prev</button>
-      <button *ngIf="showNext" class="btn-next" (click)="next()">Next</button>
+      <button *ngIf="showBack" class="btn-prev" (click)="back()">Back</button>
     </div>
   </div>
 </div>
