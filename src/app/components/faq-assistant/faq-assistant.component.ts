@@ -1,4 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+  ComponentFactoryResolver
+
+} from '@angular/core';
 import { TitleService } from '../../services/title/title.service';
 import { Title } from '../../interfaces/title/title.interface';
 import { ItemManager } from '../../item-manager/item-manager';
@@ -11,19 +19,38 @@ import { ItemManager } from '../../item-manager/item-manager';
 export class FaqAssistantComponent implements OnInit {
 
   titleList: Title[];
-  answer: string;
   items: Title[];
   showFinish = false;
   lastStep: boolean;
   showBack = false;
+  answer: string;
+  componentRef: any;
 
-  constructor(private titleService: TitleService, private itemManager: ItemManager) { }
+  public constructor(private titleService: TitleService,
+              private itemManager: ItemManager,
+              private viewContainerRef: ViewContainerRef,
+              private resolver: ComponentFactoryResolver
+  ) { }
 
   @Input() customClass: string;
+
+  @ViewChild('finalanswer', { read: ViewContainerRef }) entry: ViewContainerRef;
+
+  createComponent(answer) {
+    this.entry.clear();
+    const factory = this.resolver.resolveComponentFactory(answer);
+    this.componentRef = this.entry.createComponent(factory);
+    this.componentRef.instance.data = 'some data';
+  }
 
   getTitleList(): void {
     this.titleList = this.titleService.getTitleList();
     this.itemManager.setItem(this.titleList);
+  }
+
+  clearDataComponent (): void {
+    this.entry.clear();
+    this.answer = '';
   }
 
   setTitle(title: Title[], answer: string): void {
@@ -31,15 +58,24 @@ export class FaqAssistantComponent implements OnInit {
       this.itemManager.setItem(title);
       this.titleList = title;
       this.showBack = true;
-    } else {
       this.answer = answer;
+    } else {
       this.showFinish = true;
       this.showBack = true;
       this.lastStep = true;
+
+      if (typeof answer === 'function') {
+        this.createComponent(answer);
+      } else {
+        this.answer = answer;
+      }
     }
   }
 
   back(): void {
+
+    this.clearDataComponent();
+
     // remove current step and get previous
     if (!this.lastStep) {
       this.itemManager.removeLastItem();

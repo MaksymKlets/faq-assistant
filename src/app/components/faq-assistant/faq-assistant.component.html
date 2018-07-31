@@ -14,10 +14,8 @@
           </ul>
         </div>
       </div>
-      <div class="inner" *ngIf="showFinish">
-        <div class="inner-title">Your anser will be here</div>
-        <div>{{answer}}</div>
-      </div>
+      <template #finalanswer></template>
+      {{answer}}
     </div>
     <div class="navigations">
       <button *ngIf="showBack" class="btn-prev" (click)="back()">Back</button>

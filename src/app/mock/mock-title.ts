@@ -1,16 +1,17 @@
 import { Title } from '../interfaces/title/title.interface';
+import { FinalAnswerComponent } from '../components/final-answer/final-answer.component';
 
 export const TitleList: Title[] = [
   {id: 1, title: 'What is your name?',
     item: [
       {id: 1, title: 'Fix', item: [
           {id: 1, title: 'Dix', item: [
-              {id: 1, title: 'Pix', answer: 'All right'},
+              {id: 1, title: 'Pix', answer: FinalAnswerComponent},
               {id: 2, title: 'Hello2', answer: 'Answer 2'},
               {id: 3, title: 'Hello3', answer: 'Answer 3'}]
           },
           {id: 2, title: 'Hello2', answer: 'Answer 2'},
-          {id: 3, title: 'Hello3', answer: 'Answer 3'}]
+          {id: 3, title: 'Hello3', answer: 'Click here'}]
       },
       {id: 2, title: 'Hello2', answer: 'Answer 2'},
       {id: 3, title: 'Hello3', answer: 'Answer 3'}]
