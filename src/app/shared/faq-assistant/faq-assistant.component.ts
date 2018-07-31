@@ -7,9 +7,8 @@ import {
   ComponentFactoryResolver
 
 } from '@angular/core';
-import { TitleService } from '../../services/title/title.service';
-import { Title } from '../../interfaces/title/title.interface';
-import { ItemManager } from '../../item-manager/item-manager';
+import { FaqItem } from '../faqItem/faqItem.interface';
+import { ItemManager } from '../item-manager/item-manager';
 
 @Component({
   selector: 'app-faq-assistant',
@@ -18,33 +17,37 @@ import { ItemManager } from '../../item-manager/item-manager';
 })
 export class FaqAssistantComponent implements OnInit {
 
-  titleList: Title[];
-  items: Title[];
+  titleList: FaqItem[];
+  items: FaqItem[];
   showFinish = false;
   lastStep: boolean;
   showBack = false;
   answer: string;
   componentRef: any;
 
-  public constructor(private titleService: TitleService,
+  public constructor(
               private itemManager: ItemManager,
               private viewContainerRef: ViewContainerRef,
               private resolver: ComponentFactoryResolver
   ) { }
 
-  @Input() customClass: string;
+  ngOnInit() {
+    this.getTitleList();
+  }
 
+  @Input() customClass: string;
+  @Input() data: FaqItem[];
   @ViewChild('finalanswer', { read: ViewContainerRef }) entry: ViewContainerRef;
 
-  createComponent(answer) {
+  createComponent(answer: any): void {
     this.entry.clear();
     const factory = this.resolver.resolveComponentFactory(answer);
     this.componentRef = this.entry.createComponent(factory);
-    this.componentRef.instance.data = 'some data';
   }
 
   getTitleList(): void {
-    this.titleList = this.titleService.getTitleList();
+    this.titleList = this.data;
+    console.log(this.titleList);
     this.itemManager.setItem(this.titleList);
   }
 
@@ -53,7 +56,7 @@ export class FaqAssistantComponent implements OnInit {
     this.answer = '';
   }
 
-  setTitle(title: Title[], answer: string): void {
+  setTitle(title: FaqItem[], answer: string): void {
     if (Array.isArray(title)) {
       this.itemManager.setItem(title);
       this.titleList = title;
@@ -76,27 +79,19 @@ export class FaqAssistantComponent implements OnInit {
 
     this.clearDataComponent();
 
-    // remove current step and get previous
-    if (!this.lastStep) {
+    if (this.lastStep) {
+      this.showFinish = false;
+      this.lastStep = false;
+    } else {
       this.itemManager.removeLastItem();
     }
+
     this.titleList = this.itemManager.getLastItem();
 
     this.items = this.itemManager.getItems();
 
-    // hide back button if first step
     if (this.items.length === 1) {
       this.showBack = false;
     }
-
-    // Show titles if not last step
-    if (this.lastStep) {
-      this.showFinish = false;
-      this.lastStep = false;
-    }
-  }
-
-  ngOnInit() {
-    this.getTitleList();
   }
 }

@@ -1,21 +1,19 @@
-import { Title } from '../interfaces/title/title.interface';
+import { FaqItem } from '../faqItem/faqItem.interface';
 
 export class ItemManager {
   pipeline = [];
 
-  constructor() {
+  constructor() { }
 
-  }
-
-  setItem(item: Title[]): void {
+  setItem(item: FaqItem[]): void {
     this.pipeline.push(item);
   }
 
-  getLastItem(): Title[] {
+  getLastItem(): FaqItem[] {
     return this.pipeline[this.pipeline.length - 1];
   }
 
-  getItems(): Title[] {
+  getItems(): FaqItem[] {
     return this.pipeline;
   }
 
