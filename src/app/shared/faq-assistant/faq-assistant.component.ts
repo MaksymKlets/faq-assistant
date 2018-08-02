@@ -4,7 +4,8 @@ import {
   Input,
   ViewChild,
   ViewContainerRef,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  ViewEncapsulation
 
 } from '@angular/core';
 import { FaqItem } from '../faqItem/faqItem.interface';
@@ -13,7 +14,8 @@ import { ItemManager } from '../item-manager/item-manager';
 @Component({
   selector: 'app-faq-assistant',
   templateUrl: './faq-assistant.component.html',
-  styleUrls: ['./faq-assistant.component.scss']
+  styleUrls: ['./faq-assistant.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FaqAssistantComponent implements OnInit {
 
@@ -25,6 +27,10 @@ export class FaqAssistantComponent implements OnInit {
   answer: string;
   componentRef: any;
 
+  @Input() customClass: string;
+  @Input() data: FaqItem[];
+  @ViewChild('finalanswer', { read: ViewContainerRef }) entry: ViewContainerRef;
+
   public constructor(
               private itemManager: ItemManager,
               private viewContainerRef: ViewContainerRef,
@@ -34,10 +40,6 @@ export class FaqAssistantComponent implements OnInit {
   ngOnInit() {
     this.getTitleList();
   }
-
-  @Input() customClass: string;
-  @Input() data: FaqItem[];
-  @ViewChild('finalanswer', { read: ViewContainerRef }) entry: ViewContainerRef;
 
   createComponent(answer: any): void {
     this.entry.clear();
