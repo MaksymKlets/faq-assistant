@@ -1,24 +1,26 @@
 <div class="container">
-  <div [ngClass]="customClass || 'defaultClass'">
-    <div class="header">
-      <div>Online help</div>
-    </div>
-    <div class="content">
-      <div class="inner" *ngIf="!showFinish">
-        <div class="inner-title">Ask please what do you want?</div>
-        <div class="items">
-          <ul>
-            <li class="item" *ngFor="let item of titleList">
-              <span [id]="item.id" (click)="setTitle(item.item, item.answer)">{{item.title}}</span>
-            </li>
-          </ul>
-        </div>
+  <div [ngClass]="customClass">
+    <div class="component-style">
+      <div class="component-style__header">
+        <div>Online help</div>
       </div>
-      <div #finalanswer></div>
-      <div>{{answer}}</div>
-    </div>
-    <div class="navigations">
-      <button *ngIf="showBack" class="btn-prev" (click)="back()">Back</button>
+      <div class="component-style__content">
+        <div class="component-style__inner" *ngIf="!showFinish">
+          <div class="component-style__inner-title">Ask please what do you want?</div>
+          <div class="component-style__items">
+            <ul>
+              <li class="component-style__item" *ngFor="let item of titleList">
+                <span [id]="item.id" (click)="setTitle(item.item, item.answer)">{{item.title}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div #finalanswer></div>
+        <div>{{answer}}</div>
+      </div>
+      <div class="component-style__navigations">
+        <button *ngIf="showBack" class="component-style__btn-prev" (click)="back()">Back</button>
+      </div>
     </div>
   </div>
 </div>
