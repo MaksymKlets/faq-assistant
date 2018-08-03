@@ -1,15 +1,18 @@
+body, li {
+  font-family: 'Cabin', sans-serif;
+  list-style: none;
+}
+
 .container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 50px;
 }
 
 .component-style {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 3px solid black;
   border-radius: 20px 20px 0 0;
 }
 
@@ -18,7 +21,8 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 20px 50px;
-  background: cornflowerblue;
+  background: rgb(122, 183, 43);
+  box-shadow: 0 2px 3px #c7bdbd;
   border-radius: 20px 20px 0 0;
 }
 
@@ -30,18 +34,32 @@
 
 .component-style__content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 30px;
-  box-shadow: 0px 0px 4px -1px;
+  overflow-y: scroll;
+  height: 300px;
+  width: 320px;
+  padding: 30px 15px 100px 15px;
+  box-shadow: 0 0 4px -1px;
+  background: whitesmoke;
+  background-size: 100%;
+  position: relative;
+}
+
+.component-style__inner {
+  border: 1px solid rgba(128, 128, 128, 0.68);
+  border-radius: 20px;
+  position: relative;
+  width: 300px;
 }
 
 .component-style__inner-title {
   font-weight: bolder;
   font-size: 16px;
-  letter-spacing: 6px;
+  letter-spacing: 2px;
   margin-bottom: 15px;
+  padding: 10px;
 }
 
 .component-style__item {
@@ -50,4 +68,33 @@
   font-size: 15px;
   letter-spacing: 2px;
   font-weight: bold;
+}
+
+.component-style__items {
+  margin-bottom: 50px;
+}
+
+.component-style__btn-prev {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background: #7ab72b;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 5px #8bbd8b;
+  position: absolute;
+  bottom: 10px;
+}
+
+.component-style__answer {
+  border: 1px solid grey;
+  border-radius: 20px;
+  position: relative;
+  width: 300px;
+}
+
+.component-style__answer-detail {
+  padding: 20px;
+  margin-bottom: 50px;
 }

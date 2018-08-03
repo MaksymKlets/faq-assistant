@@ -5,21 +5,32 @@
         <div>Online help</div>
       </div>
       <div class="component-style__content">
-        <div class="component-style__inner" *ngIf="!showFinish">
-          <div class="component-style__inner-title">Ask please what do you want?</div>
-          <div class="component-style__items">
-            <ul>
-              <li class="component-style__item" *ngFor="let item of titleList">
-                <span [id]="item.id" (click)="setTitle(item.item, item.answer)">{{item.title}}</span>
-              </li>
-            </ul>
+        <div>
+          <div class="component-style__inner" *ngIf="!showFinish">
+            <div class="component-style__inner-title">Ask please what do you want?</div>
+            <div class="component-style__items">
+              <ul>
+                <li class="component-style__item" *ngFor="let item of titleList">
+                  <span [id]="item.id" (click)="setTitle(item.item, item.answer)">{{item.title}}</span>
+                </li>
+              </ul>
+              <div class="component-style__navigations">
+                <button *ngIf="showBack" class="component-style__btn-prev" (click)="back()">Back</button>
+              </div>
+            </div>
           </div>
         </div>
-        <div #finalanswer></div>
-        <div>{{answer}}</div>
-      </div>
-      <div class="component-style__navigations">
-        <button *ngIf="showBack" class="component-style__btn-prev" (click)="back()">Back</button>
+        <div *ngIf="showFinish" class="component-style__answer">
+          <div>
+            <div class="component-style__answer-detail">
+              <div #finalanswer></div>
+              <span>{{answer}}</span>
+            </div>
+          </div>
+          <div class="component-style__navigations">
+            <button *ngIf="showBack" class="component-style__btn-prev" (click)="back()">Back</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
