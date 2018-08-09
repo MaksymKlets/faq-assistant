@@ -1,53 +1,101 @@
+@import '../../styles/base/variables';
+
+.faq-assistant li {
+  list-style: none;
+}
+
 .container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 50px;
 }
 
-.component-style {
+.faq-assistant {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: 3px solid black;
   border-radius: 20px 20px 0 0;
 }
 
-.component-style__header {
+.faq-assistant__header {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   padding: 20px 50px;
-  background: cornflowerblue;
+  background: $color-background-header;
+  box-shadow: 0 2px 3px $color-box-shadow;
   border-radius: 20px 20px 0 0;
 }
 
-.component-style__navigations {
+.faq-assistant__navigations {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
-.component-style__content {
+.faq-assistant__content {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 30px;
-  box-shadow: 0px 0px 4px -1px;
+  overflow-y: scroll;
+  height: 300px;
+  width: 320px;
+  padding: 30px 15px 100px 15px;
+  box-shadow: 0 0 4px -1px;
+  background: $color-text-white;
+  background-size: 100%;
+  position: relative;
 }
 
-.component-style__inner-title {
+.faq-assistant__inner {
+  border: 1px solid $color-border;
+  border-radius: 20px;
+  position: relative;
+  width: 300px;
+}
+
+.faq-assistant__inner-title {
   font-weight: bolder;
   font-size: 16px;
-  letter-spacing: 6px;
+  letter-spacing: 2px;
   margin-bottom: 15px;
+  padding: 10px;
 }
 
-.component-style__item {
+.faq-assistant__item {
   padding: 10px 0;
-  color: grey;
+  color: $color-text-item;
   font-size: 15px;
   letter-spacing: 2px;
   font-weight: bold;
+}
+
+.faq-assistant__items {
+  margin-bottom: 50px;
+}
+
+.faq-assistant__btn-prev {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background: $color-background-btn;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 0 5px $color-box-shadow-btn;
+  position: absolute;
+  bottom: 10px;
+}
+
+.faq-assistant__answer {
+  border: 1px solid $color-text-item;
+  border-radius: 20px;
+  position: relative;
+  width: 300px;
+}
+
+.faq-assistant__answer-detail {
+  padding: 20px;
+  margin-bottom: 50px;
 }

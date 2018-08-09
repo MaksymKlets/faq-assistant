@@ -54,7 +54,9 @@ export class FaqAssistantComponent implements OnInit {
   }
 
   clearDataComponent (): void {
-    this.entry.clear();
+    if (this.entry) {
+      this.entry.clear();
+    }
     this.answer = '';
   }
 
