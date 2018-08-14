@@ -38,18 +38,19 @@ export class FaqAssistantComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const activateFaqBtn = document.getElementsByClassName('faq-container__btn-box')[0];
+    setTimeout(() => {
+      const activateFaqBtn = document.getElementsByClassName('faq-container__image-btn')[0];
 
-    activateFaqBtn.addEventListener('click', function () {
-      const faqContainer = document.getElementsByClassName('container')[0];
-      const faqMessageIcon = document.getElementsByClassName('faq-container__message-icon')[0];
+      activateFaqBtn.addEventListener('click', function () {
+        const faqContainer = document.getElementsByClassName('container-box')[0];
+        const faqMessageIcon = document.getElementsByClassName('faq-container__message-icon')[0];
 
-      faqContainer.classList.toggle('visibilityContainer');
-      activateFaqBtn.classList.toggle('faq-container__opacity-btn');
-      faqMessageIcon.classList.toggle('faq-container__shadow-icon');
+        faqContainer.classList.toggle('visibilityContainer');
+        activateFaqBtn.classList.toggle('faq-container__opacity-btn');
+        faqMessageIcon.classList.toggle('faq-container__close-icon');
+      });
+      this.getTitleList();
     });
-
-    this.getTitleList();
   }
 
   createComponent(answer: any): void {

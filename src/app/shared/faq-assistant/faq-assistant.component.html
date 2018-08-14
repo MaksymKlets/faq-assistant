@@ -1,5 +1,5 @@
 <div class="faq-container">
-  <div class="container visibilityContainer">
+  <div class="container-box visibilityContainer">
     <div [ngClass]="customClass">
       <div class="faq-assistant">
         <div class="faq-assistant__header">
@@ -8,7 +8,7 @@
         <div class="faq-assistant__content">
           <div>
             <div class="faq-assistant__inner" *ngIf="!showFinish">
-              <div class="faq-assistant__inner-title">Ask please what do you want?</div>
+              <div class="faq-assistant__inner-title">Please, select your option:</div>
               <div class="faq-assistant__items">
                 <ul>
                   <li class="faq-assistant__item" *ngFor="let item of titleList">
