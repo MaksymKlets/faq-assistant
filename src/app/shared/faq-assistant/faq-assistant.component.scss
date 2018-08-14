@@ -8,6 +8,44 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  opacity: 1;
+  transition: .3s ease-out;
+}
+
+.visibilityContainer {
+  opacity: 0;
+}
+
+.faq-container {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+}
+
+.faq-container__image-btn {
+  float: right;
+}
+
+.faq-container__message-icon {
+  background: url(./assets/message.png) no-repeat;
+  background-size: cover;
+  max-width: 100px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transition: .3s;
+}
+
+.faq-container__btn-box {
+  transition: .2s ease-out;
+}
+
+.faq-container__opacity-btn {
+  opacity: .8;
+}
+
+.faq-container__shadow-icon {
+  box-shadow: 0 0 10px $color-box-shadow-icon;
 }
 
 .faq-assistant {
@@ -46,6 +84,7 @@
   background: $color-text-white;
   background-size: 100%;
   position: relative;
+  margin-bottom: 50px;
 }
 
 .faq-assistant__inner {

@@ -38,6 +38,17 @@ export class FaqAssistantComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    const activateFaqBtn = document.getElementsByClassName('faq-container__btn-box')[0];
+
+    activateFaqBtn.addEventListener('click', function () {
+      const faqContainer = document.getElementsByClassName('container')[0];
+      const faqMessageIcon = document.getElementsByClassName('faq-container__message-icon')[0];
+
+      faqContainer.classList.toggle('visibilityContainer');
+      activateFaqBtn.classList.toggle('faq-container__opacity-btn');
+      faqMessageIcon.classList.toggle('faq-container__shadow-icon');
+    });
+
     this.getTitleList();
   }
 
@@ -49,7 +60,6 @@ export class FaqAssistantComponent implements OnInit {
 
   getTitleList(): void {
     this.titleList = this.data;
-    console.log(this.titleList);
     this.itemManager.setItem(this.titleList);
   }
 
