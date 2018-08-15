@@ -22,11 +22,9 @@
             </div>
           </div>
           <div *ngIf="showFinish" class="faq-assistant__answer">
-            <div>
-              <div class="faq-assistant__answer-detail">
-                <div #finalanswer></div>
-                <span>{{answer}}</span>
-              </div>
+            <div class="faq-assistant__answer-detail">
+              <div #finalanswer></div>
+              <span>{{answer}}</span>
             </div>
             <div class="faq-assistant__navigations">
               <button *ngIf="showBack" class="faq-assistant__btn-prev" (click)="back()">Back</button>

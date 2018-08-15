@@ -8,8 +8,8 @@ import {
   ViewEncapsulation
 
 } from '@angular/core';
-import { FaqItem } from '../faqItem/faqItem.interface';
-import { ItemManager } from '../item-manager/item-manager';
+import {FaqItem} from '../faqItem/faqItem.interface';
+import {ItemManager} from '../item-manager/item-manager';
 
 @Component({
   selector: 'app-faq-assistant',
@@ -29,13 +29,14 @@ export class FaqAssistantComponent implements OnInit {
 
   @Input() customClass: string;
   @Input() data: FaqItem[];
-  @ViewChild('finalanswer', { read: ViewContainerRef }) entry: ViewContainerRef;
+  @ViewChild('finalanswer', {read: ViewContainerRef}) entry: ViewContainerRef;
 
   public constructor(
-              private itemManager: ItemManager,
-              private viewContainerRef: ViewContainerRef,
-              private resolver: ComponentFactoryResolver
-  ) { }
+    private itemManager: ItemManager,
+    private viewContainerRef: ViewContainerRef,
+    private resolver: ComponentFactoryResolver
+  ) {
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -64,7 +65,7 @@ export class FaqAssistantComponent implements OnInit {
     this.itemManager.setItem(this.titleList);
   }
 
-  clearDataComponent (): void {
+  clearDataComponent(): void {
     if (this.entry) {
       this.entry.clear();
     }
