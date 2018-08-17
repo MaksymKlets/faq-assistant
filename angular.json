@@ -5,7 +5,7 @@
   "projects": {
     "userHelp": {
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "example",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -14,16 +14,16 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/userHelp",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "index": "example/index.html",
+            "main": "example/main.ts",
+            "polyfills": "example/polyfills.ts",
+            "tsConfig": "example/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "example/favicon.ico",
+              "example/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "example/styles.css"
             ],
             "scripts": []
           },
@@ -31,8 +31,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "example/environments/environment.ts",
+                  "with": "example/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -67,17 +67,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
+            "main": "example/test.ts",
+            "polyfills": "example/polyfills.ts",
+            "tsConfig": "example/tsconfig.spec.json",
+            "karmaConfig": "example/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "example/styles.css"
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "example/favicon.ico",
+              "example/assets"
             ]
           }
         },
@@ -85,8 +85,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "example/tsconfig.app.json",
+              "example/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -124,7 +124,7 @@
     },
     "faq-assistant": {
       "root": "projects/faq-assistant",
-      "sourceRoot": "projects/faq-assistant/src",
+      "sourceRoot": "projects/faq-assistant/example",
       "projectType": "library",
       "prefix": "app",
       "architect": {
@@ -143,7 +143,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/faq-assistant/src/test.ts",
+            "main": "projects/faq-assistant/example/test.ts",
             "tsConfig": "projects/faq-assistant/tsconfig.spec.json",
             "karmaConfig": "projects/faq-assistant/karma.conf.js"
           }
