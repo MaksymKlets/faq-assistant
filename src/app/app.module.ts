@@ -1,19 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { FaqAssistantComponent } from './shared/faq-assistant/faq-assistant.component';
-import { ItemManager } from './shared/item-manager/item-manager';
+import {FaqModule} from '../../projects/faq-assistant/src/public_api';
+import {ItemManagerService} from '../../projects/faq-assistant/src/public_api';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FaqAssistantComponent
+
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FaqModule
   ],
-  providers: [ItemManager],
+  providers: [ItemManagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

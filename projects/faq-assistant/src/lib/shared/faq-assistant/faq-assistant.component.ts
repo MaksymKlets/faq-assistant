@@ -9,7 +9,7 @@ import {
 
 } from '@angular/core';
 import {FaqItem} from '../faqItem/faqItem.interface';
-import {ItemManager} from '../item-manager/item-manager';
+import {ItemManagerService} from '../item-manager/item-manager.service';
 
 @Component({
   selector: 'app-faq-assistant',
@@ -32,7 +32,7 @@ export class FaqAssistantComponent implements OnInit {
   @ViewChild('finalanswer', {read: ViewContainerRef}) entry: ViewContainerRef;
 
   public constructor(
-    private itemManager: ItemManager,
+    private itemManager: ItemManagerService,
     private viewContainerRef: ViewContainerRef,
     private resolver: ComponentFactoryResolver
   ) {
