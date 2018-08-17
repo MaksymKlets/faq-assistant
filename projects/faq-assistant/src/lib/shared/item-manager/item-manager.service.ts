@@ -1,6 +1,6 @@
 import { FaqItem } from '../faqItem/faqItem.interface';
 
-export class ItemManager {
+export class ItemManagerService {
   pipeline = [];
 
   constructor() { }

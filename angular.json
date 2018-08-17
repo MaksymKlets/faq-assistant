@@ -121,6 +121,46 @@
           }
         }
       }
+    },
+    "faq-assistant": {
+      "root": "projects/faq-assistant",
+      "sourceRoot": "projects/faq-assistant/src",
+      "projectType": "library",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/faq-assistant/tsconfig.lib.json",
+            "project": "projects/faq-assistant/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/faq-assistant/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/faq-assistant/src/test.ts",
+            "tsConfig": "projects/faq-assistant/tsconfig.spec.json",
+            "karmaConfig": "projects/faq-assistant/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/faq-assistant/tsconfig.lib.json",
+              "projects/faq-assistant/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "userHelp",

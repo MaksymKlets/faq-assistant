@@ -1,0 +1,40 @@
+<div class="faq-container">
+  <div class="container-box visibilityContainer">
+    <div [ngClass]="customClass">
+      <div class="faq-assistant">
+        <div class="faq-assistant__header">
+          <div>Online help</div>
+        </div>
+        <div class="faq-assistant__content">
+          <div>
+            <div class="faq-assistant__inner" *ngIf="!showFinish">
+              <div class="faq-assistant__inner-title">Please, select your option:</div>
+              <div class="faq-assistant__items">
+                <ul>
+                  <li class="faq-assistant__item" *ngFor="let item of titleList">
+                    <span [id]="item.id" (click)="setTitle(item.item, item.answer)">{{item.title}}</span>
+                  </li>
+                </ul>
+                <div class="faq-assistant__navigations">
+                  <button *ngIf="showBack" class="faq-assistant__btn-prev" (click)="back()">Back</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showFinish" class="faq-assistant__answer">
+            <div class="faq-assistant__answer-detail">
+              <div #finalanswer></div>
+              <span>{{answer}}</span>
+            </div>
+            <div class="faq-assistant__navigations">
+              <button *ngIf="showBack" class="faq-assistant__btn-prev" (click)="back()">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="faq-container__btn-box">
+    <div class="faq-container__image-btn faq-container__message-icon"></div>
+  </div>
+</div>

@@ -8,8 +8,8 @@ import {
   ViewEncapsulation
 
 } from '@angular/core';
-import { FaqItem } from '../faqItem/faqItem.interface';
-import { ItemManager } from '../item-manager/item-manager';
+import {FaqItem} from '../faqItem/faqItem.interface';
+import {ItemManagerService} from '../item-manager/item-manager.service';
 
 @Component({
   selector: 'app-faq-assistant',
@@ -29,16 +29,29 @@ export class FaqAssistantComponent implements OnInit {
 
   @Input() customClass: string;
   @Input() data: FaqItem[];
-  @ViewChild('finalanswer', { read: ViewContainerRef }) entry: ViewContainerRef;
+  @ViewChild('finalanswer', {read: ViewContainerRef}) entry: ViewContainerRef;
 
   public constructor(
-              private itemManager: ItemManager,
-              private viewContainerRef: ViewContainerRef,
-              private resolver: ComponentFactoryResolver
-  ) { }
+    private itemManager: ItemManagerService,
+    private viewContainerRef: ViewContainerRef,
+    private resolver: ComponentFactoryResolver
+  ) {
+  }
 
   ngOnInit() {
-    this.getTitleList();
+    setTimeout(() => {
+      const activateFaqBtn = document.getElementsByClassName('faq-container__image-btn')[0];
+
+      activateFaqBtn.addEventListener('click', function () {
+        const faqContainer = document.getElementsByClassName('container-box')[0];
+        const faqMessageIcon = document.getElementsByClassName('faq-container__message-icon')[0];
+
+        faqContainer.classList.toggle('visibilityContainer');
+        activateFaqBtn.classList.toggle('faq-container__opacity-btn');
+        faqMessageIcon.classList.toggle('faq-container__close-icon');
+      });
+      this.getTitleList();
+    });
   }
 
   createComponent(answer: any): void {
@@ -49,11 +62,10 @@ export class FaqAssistantComponent implements OnInit {
 
   getTitleList(): void {
     this.titleList = this.data;
-    console.log(this.titleList);
     this.itemManager.setItem(this.titleList);
   }
 
-  clearDataComponent (): void {
+  clearDataComponent(): void {
     if (this.entry) {
       this.entry.clear();
     }
