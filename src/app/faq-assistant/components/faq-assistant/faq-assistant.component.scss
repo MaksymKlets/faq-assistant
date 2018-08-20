@@ -19,44 +19,13 @@
 
 .faq-container {
   position: fixed;
-  bottom: 5%;
+  bottom: 8%;
   right: 5%;
   z-index: 1000;
 }
 
 .faq-container__image-btn {
   float: right;
-}
-
-.faq-container__message-icon {
-  background: url(assets/message.png) no-repeat;
-  background-size: cover;
-  max-width: 100px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  transition: .3s;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
-}
-
-.faq-container__close-icon {
-  background: url(assets/close.jpg) no-repeat;
-  background-size: cover;
-  max-width: 100px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  transition: .3s;
-  transform: rotate(160deg);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
-}
-
-.faq-container__message-icon:hover {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0 12px 4px, rgba(0, 0, 0, 0.15) 0px 0px 14px 8px;
-}
-
-.faq-container__btn-box {
-  transition: .2s ease-out;
 }
 
 .faq-container__opacity-btn {
