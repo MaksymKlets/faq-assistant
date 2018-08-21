@@ -33,7 +33,7 @@ export class FaqAssistantComponent implements OnInit, OnDestroy {
 
   @Input() customClass: string;
   @Input() data: FaqItemListInterface[];
-  @ViewChild('finalAnswer', {read: ViewContainerRef}) entry: ViewContainerRef;
+  @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
   constructor(
     private itemManager: FaqItemListService,
@@ -56,9 +56,9 @@ export class FaqAssistantComponent implements OnInit, OnDestroy {
   }
 
   createComponent(answer: any): void {
-    this.entry.clear();
+    this.finalAnswerContent.clear();
     const factory = this.resolver.resolveComponentFactory(answer);
-    this.componentRef = this.entry.createComponent(factory);
+    this.componentRef = this.finalAnswerContent.createComponent(factory);
   }
 
   getTitleList(): void {
@@ -67,8 +67,8 @@ export class FaqAssistantComponent implements OnInit, OnDestroy {
   }
 
   clearDataComponent(): void {
-    if (this.entry) {
-      this.entry.clear();
+    if (this.finalAnswerContent) {
+      this.finalAnswerContent.clear();
     }
     this.answer = '';
   }
