@@ -1,7 +1,6 @@
 import {
   Component,
-  ViewEncapsulation,
-  OnInit
+  ViewEncapsulation
 } from '@angular/core';
 import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
 
@@ -11,15 +10,12 @@ import {CommunicationFaqAssistantService} from '../../services/communication-faq
   styleUrls: ['./faq-assistant-button.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FaqAssistantButtonComponent implements OnInit {
+export class FaqAssistantButtonComponent {
 
   visibilityContainer = true;
   visibilityCloseButton = false;
 
   constructor(private communicationFaqAssistantService: CommunicationFaqAssistantService) {
-  }
-
-  ngOnInit() {
   }
 
   showHideFaqAssistantContainer(): void {

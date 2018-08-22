@@ -12,12 +12,16 @@
 }
 
 .faq-button-container__image-btn {
+  position: relative;
   float: right;
 }
 
 .faq-button-container__message-icon {
-  background: url(https://s3.amazonaws.com/forma-assets/faq-assistant/message.png) no-repeat;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   background-size: cover;
+  opacity: 1;
   max-width: 100px;
   width: 60px;
   height: 60px;
@@ -27,16 +31,33 @@
 }
 
 .faq-button-container__close-icon {
-  background: url(https://s3.amazonaws.com/forma-assets/faq-assistant/close.jpg) no-repeat;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   background-size: cover;
+  opacity: 0;
   max-width: 100px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  opacity: .8;
   transition: .3s;
-  transform: rotate(160deg);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
+}
+
+.faq-button-container__state-button .faq-button-container__message-icon {
+  opacity: 0;
+}
+
+.faq-button-container__state-button .faq-button-container__close-icon {
+  opacity: .8;
+}
+
+.faq-button-container__state-button .faq-button-container__close-icon-rotate {
+  transform: rotate(180deg);
+}
+
+.faq-button-container__state-button .faq-button-container__close-icon-rotate:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0 12px 4px, rgba(0, 0, 0, 0.15) 0px 0px 14px 8px;
 }
 
 .faq-button-container__message-icon:hover {

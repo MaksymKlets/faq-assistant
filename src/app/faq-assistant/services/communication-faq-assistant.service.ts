@@ -4,12 +4,12 @@ import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CommunicationFaqAssistantService {
-  private subject = new Subject<any>();
+  subject = new Subject<any>();
 
   constructor() {
   }
 
-  sendVisibilityState(state: boolean) {
+  sendVisibilityState(state: boolean): void {
     this.subject.next(state);
   }
 

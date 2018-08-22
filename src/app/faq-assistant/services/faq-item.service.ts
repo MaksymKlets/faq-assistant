@@ -1,22 +1,22 @@
-import {FaqItemListInterface} from '../interfaces/faq-item.interface';
 import {Injectable} from '@angular/core';
+import {FaqItemContentInterface} from '../interfaces/faq-item.interface';
 
 @Injectable()
 export class FaqItemListService {
-  pipeline: FaqItemListInterface[][] = [];
+  pipeline: FaqItemContentInterface[][] = [];
 
   constructor() {
   }
 
-  setItem(itemList: FaqItemListInterface[]): void {
+  setItem(itemList: FaqItemContentInterface[]): void {
     this.pipeline.push(itemList);
   }
 
-  getLastItem(): FaqItemListInterface[] {
+  getLastItem(): FaqItemContentInterface[] {
     return this.pipeline[this.pipeline.length - 1];
   }
 
-  getItems(): FaqItemListInterface[][] {
+  getItems(): FaqItemContentInterface[][] {
     return this.pipeline;
   }
 

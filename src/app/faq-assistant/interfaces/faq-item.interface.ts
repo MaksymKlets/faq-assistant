@@ -1,5 +1,4 @@
-export interface FaqItemListInterface {
+export interface FaqItemContentInterface {
   title: string;
-  answer?: string;
-  itemList?: FaqItemListInterface[];
+  content: FaqItemContentInterface[] | string | object;
 }

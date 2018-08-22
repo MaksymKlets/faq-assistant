@@ -5,11 +5,10 @@ import {
   ViewChild,
   ViewContainerRef,
   ComponentFactoryResolver,
-  ViewEncapsulation,
-  OnDestroy
+  ViewEncapsulation
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {FaqItemListInterface} from '../../interfaces/faq-item.interface';
+import {FaqItemContentInterface} from '../../interfaces/faq-item.interface';
 import {FaqItemListService} from '../../services/faq-item.service';
 import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
 
@@ -19,20 +18,21 @@ import {CommunicationFaqAssistantService} from '../../services/communication-faq
   styleUrls: ['./faq-assistant.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FaqAssistantComponent implements OnInit, OnDestroy {
+export class FaqAssistantComponent implements OnInit {
 
-  titleList: FaqItemListInterface[];
-  items: FaqItemListInterface[][];
+  titleList: FaqItemContentInterface[];
+  items: FaqItemContentInterface[][];
   showFinish = false;
   lastStep: boolean;
   showBack = false;
-  answer: string | object;
+  answer: string;
   componentRef: any;
   subscription: Subscription;
-  visibilityContainer: true;
+  visibilityContainer = true;
 
   @Input() customClass: string;
-  @Input() data: FaqItemListInterface[];
+  @Input() data: FaqItemContentInterface[];
+  @Input() params: any;
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
   constructor(
@@ -47,18 +47,16 @@ export class FaqAssistantComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.visibilityContainer = true;
     this.getTitleList();
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  createComponent(answer: any): void {
-    this.finalAnswerContent.clear();
-    const factory = this.resolver.resolveComponentFactory(answer);
-    this.componentRef = this.finalAnswerContent.createComponent(factory);
+  createComponent(answer: any, params: any): void {
+    setTimeout(() => {
+      this.finalAnswerContent.clear();
+      const factory = this.resolver.resolveComponentFactory(answer);
+      this.componentRef = this.finalAnswerContent.createComponent(factory);
+      this.componentRef.instance.data = params;
+    });
   }
 
   getTitleList(): void {
@@ -73,21 +71,20 @@ export class FaqAssistantComponent implements OnInit, OnDestroy {
     this.answer = '';
   }
 
-  setTitle(title: FaqItemListInterface[], answer: string): void {
-    if (Array.isArray(title)) {
-      this.itemManager.setItem(title);
-      this.titleList = title;
+  setTitle(content: FaqItemContentInterface[]): void {
+    if (Array.isArray(content)) {
+      this.itemManager.setItem(content);
+      this.titleList = content;
       this.showBack = true;
-      this.answer = answer;
     } else {
       this.showFinish = true;
       this.showBack = true;
       this.lastStep = true;
 
-      if (typeof answer === 'function') {
-        this.createComponent(answer);
-      } else {
-        this.answer = answer;
+      if (typeof content === 'function') {
+        this.createComponent(content, this.params);
+      } else if (typeof content === 'string') {
+        this.answer = content;
       }
     }
   }
