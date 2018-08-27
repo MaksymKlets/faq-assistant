@@ -1,5 +1,5 @@
 <div class="faq-container">
-  <div [ngClass]="{'visibilityContainer': visibilityContainer}" class="container-box">
+  <div [ngClass]="{'visibilityContainer': isContainerVisible}" class="container-box">
     <div [ngClass]="customClass">
       <div class="faq-assistant">
         <div class="faq-assistant__header">
@@ -10,10 +10,10 @@
             <div class="faq-assistant__inner-title">Please, select your option:</div>
             <div class="faq-assistant__items">
               <ul>
-                <li class="faq-assistant__item" *ngFor="let item of titleList">
-                  <div (click)="setTitle(item.content)">
+                <li class="faq-assistant__item" *ngFor="let item of indexConfigList">
+                  <div (click)="setTitle(titleList[item])">
                     <div class="faq-assistant__custom-radio-button"></div>
-                    <span>{{item.title}}</span>
+                    <span>{{titleList[item].title}}</span>
                   </div>
                 </li>
               </ul>

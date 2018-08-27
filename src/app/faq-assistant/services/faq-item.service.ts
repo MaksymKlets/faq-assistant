@@ -3,21 +3,40 @@ import {FaqItemContentInterface} from '../interfaces/faq-item.interface';
 
 @Injectable()
 export class FaqItemListService {
-  pipeline: FaqItemContentInterface[][] = [];
+  pipeline: Array<object> = [];
+  currentObjectConfig: object;
 
   constructor() {
   }
 
-  setItem(itemList: FaqItemContentInterface[]): void {
+  setPipeLineItem(itemList: object): void {
     this.pipeline.push(itemList);
   }
 
-  getLastItem(): FaqItemContentInterface[] {
+  getLastItem() {
     return this.pipeline[this.pipeline.length - 1];
   }
 
-  getItems(): FaqItemContentInterface[][] {
+  getItems(): Array<object> {
     return this.pipeline;
+  }
+
+  getItemsById(property) {
+    const contentList = {};
+
+    for (let i = 0; i < property.length; i++) {
+      contentList[i] = this.currentObjectConfig[property[i]];
+    }
+
+    return contentList;
+  }
+
+  setInitialStateData(object) {
+    this.currentObjectConfig = object;
+  }
+
+  getInitialStateData() {
+    return this.currentObjectConfig;
   }
 
   removeLastItem(): void {

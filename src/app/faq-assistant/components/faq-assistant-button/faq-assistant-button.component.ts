@@ -12,15 +12,13 @@ import {CommunicationFaqAssistantService} from '../../services/communication-faq
 })
 export class FaqAssistantButtonComponent {
 
-  visibilityContainer = true;
-  visibilityCloseButton = false;
+  isContainerVisible = false;
 
   constructor(private communicationFaqAssistantService: CommunicationFaqAssistantService) {
   }
 
   showHideFaqAssistantContainer(): void {
-    this.visibilityContainer = !this.visibilityContainer;
-    this.visibilityCloseButton = !this.visibilityCloseButton;
-    this.communicationFaqAssistantService.sendVisibilityState(this.visibilityContainer);
+    this.isContainerVisible = !this.isContainerVisible;
+    this.communicationFaqAssistantService.sendVisibilityState(this.isContainerVisible);
   }
 }

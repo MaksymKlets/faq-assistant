@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {FaqItemContentInterface} from './faq-assistant/interfaces/faq-item.interface';
+import {EntryComponent} from './faq-assistant/components/entry/entry.component';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +8,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  data = {
+    0: {
+      title: 'Zero item',
+      content: EntryComponent
+    },
+    1: {
+      title: 'First item',
+      content: [2, 3]
+    },
+    2: {
+      title: 'Second item',
+      content: 'Here answer 2'
+    },
+    3: {
+      title: 'Third item',
+      content: 'Here answer 3'
+    }
+  };
 }

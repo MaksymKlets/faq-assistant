@@ -4,16 +4,16 @@ import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CommunicationFaqAssistantService {
-  subject = new Subject<any>();
+  private visibilityContainer = new Subject<any>();
 
   constructor() {
   }
 
   sendVisibilityState(state: boolean): void {
-    this.subject.next(state);
+    this.visibilityContainer.next(state);
   }
 
   receiveVisibilityState(): Observable<any> {
-    return this.subject.asObservable();
+    return this.visibilityContainer.asObservable();
   }
 }

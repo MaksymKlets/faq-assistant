@@ -20,20 +20,28 @@ import {CommunicationFaqAssistantService} from '../../services/communication-faq
 })
 export class FaqAssistantComponent implements OnInit {
 
-  titleList: FaqItemContentInterface[];
-  items: FaqItemContentInterface[][];
+  titleList: object;
+  items: Array<object>;
   showFinish = false;
   lastStep: boolean;
   showBack = false;
   answer: string;
   componentRef: any;
-  subscription: Subscription;
-  visibilityContainer = true;
+  stateFaqContainer: Subscription;
+  isContainerVisible = false;
+  indexConfigList: Array<string>;
 
   @Input() customClass: string;
   @Input() data: FaqItemContentInterface[];
   @Input() params: any;
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
+
+  ngOnInit() {
+    this.getTitleList();
+    this.stateFaqContainer = this.communicationFaqAssistantService.receiveVisibilityState().subscribe(stateContainer => {
+      this.isContainerVisible = stateContainer;
+    });
+  }
 
   constructor(
     private itemManager: FaqItemListService,
@@ -41,16 +49,9 @@ export class FaqAssistantComponent implements OnInit {
     private resolver: ComponentFactoryResolver,
     private communicationFaqAssistantService: CommunicationFaqAssistantService
   ) {
-    this.subscription = this.communicationFaqAssistantService.receiveVisibilityState().subscribe(stateContainer => {
-      this.visibilityContainer = stateContainer;
-    });
   }
 
-  ngOnInit() {
-    this.getTitleList();
-  }
-
-  createComponent(answer: any, params: any): void {
+  private createComponent(answer: any, params: any): void {
     setTimeout(() => {
       this.finalAnswerContent.clear();
       const factory = this.resolver.resolveComponentFactory(answer);
@@ -59,48 +60,71 @@ export class FaqAssistantComponent implements OnInit {
     });
   }
 
-  getTitleList(): void {
+  private getTitleList(): void {
     this.titleList = this.data;
-    this.itemManager.setItem(this.data);
+    this.itemManager.setInitialStateData(this.titleList);
+    this.indexConfigList = Object.keys(this.titleList);
+    this.itemManager.setPipeLineItem(this.titleList);
   }
 
-  clearDataComponent(): void {
+  private clearDataComponent(): void {
     if (this.finalAnswerContent) {
       this.finalAnswerContent.clear();
     }
     this.answer = '';
   }
 
-  setTitle(content: FaqItemContentInterface[]): void {
-    if (Array.isArray(content)) {
-      this.itemManager.setItem(content);
-      this.titleList = content;
+  private setTitle(item): void {
+    if (Array.isArray(item.content)) {
+      this.titleList = this.itemManager.getItemsById(item.content);
+      this.indexConfigList = Object.keys(this.titleList);
+      this.itemManager.setPipeLineItem(item);
       this.showBack = true;
-    } else {
+    } else if (typeof item.content === 'function') {
+      this.createComponent(item.content, this.params);
       this.showFinish = true;
       this.showBack = true;
       this.lastStep = true;
-
-      if (typeof content === 'function') {
-        this.createComponent(content, this.params);
-      } else if (typeof content === 'string') {
-        this.answer = content;
-      }
+    } else {
+      this.answer = item.content;
+      this.showFinish = true;
+      this.showBack = true;
+      this.lastStep = true;
     }
   }
 
-  back(): void {
+  private setInitialStateData() {
+    this.titleList = this.itemManager.getInitialStateData();
+    this.indexConfigList = Object.keys(this.titleList);
+  }
+
+  private back(): void {
     this.clearDataComponent();
+    this.items = this.itemManager.getItems();
 
     if (this.lastStep) {
+      const lastItem = this.itemManager.getLastItem();
+
+      if (this.items.length === 1) {
+        this.setInitialStateData();
+      } else {
+        this.titleList = this.itemManager.getItemsById(lastItem.content);
+        this.indexConfigList = Object.keys(this.titleList);
+      }
+
       this.showFinish = false;
       this.lastStep = false;
     } else {
+      const lastItem = this.itemManager.getLastItem();
       this.itemManager.removeLastItem();
-    }
 
-    this.titleList = this.itemManager.getLastItem();
-    this.items = this.itemManager.getItems();
+      if (this.items.length === 1) {
+        this.setInitialStateData();
+      } else {
+        this.titleList = this.itemManager.getItemsById(lastItem.content);
+        this.indexConfigList = Object.keys(this.titleList);
+      }
+    }
 
     if (this.items.length === 1) {
       this.showBack = false;
