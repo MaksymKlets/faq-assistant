@@ -1,4 +1,8 @@
-export interface FaqItemContentInterface {
+export interface FaqItemContentInterface<T> {
+  [index: number]: T;
+}
+
+export interface FaqObject {
   title: string;
-  content: object | string | Array<number>;
+  content: string | object;
 }

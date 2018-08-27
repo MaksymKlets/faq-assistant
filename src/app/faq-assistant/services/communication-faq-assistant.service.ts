@@ -4,7 +4,7 @@ import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CommunicationFaqAssistantService {
-  private visibilityContainer = new Subject<any>();
+  private visibilityContainer = new Subject<boolean>();
 
   constructor() {
   }
@@ -13,7 +13,7 @@ export class CommunicationFaqAssistantService {
     this.visibilityContainer.next(state);
   }
 
-  receiveVisibilityState(): Observable<any> {
+  receiveVisibilityState(): Observable<boolean> {
     return this.visibilityContainer.asObservable();
   }
 }

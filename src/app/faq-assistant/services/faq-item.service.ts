@@ -1,15 +1,16 @@
 import {Injectable} from '@angular/core';
-import {FaqItemContentInterface} from '../interfaces/faq-item.interface';
+import {FaqItemContentInterface, FaqObject} from '../interfaces/faq-item.interface';
 
 @Injectable()
 export class FaqItemListService {
-  pipeline: Array<object> = [];
-  currentObjectConfig: object;
+  pipeline: object[] = [];
+  currentObjectConfig: FaqItemContentInterface<FaqObject>;
 
   constructor() {
+
   }
 
-  setPipeLineItem(itemList: object): void {
+  setPipeLineItem(itemList: FaqObject | FaqItemContentInterface<FaqObject>): void {
     this.pipeline.push(itemList);
   }
 
@@ -17,25 +18,25 @@ export class FaqItemListService {
     return this.pipeline[this.pipeline.length - 1];
   }
 
-  getItems(): Array<object> {
+  getItems(): object[] {
     return this.pipeline;
   }
 
-  getItemsById(property) {
+  getItemsById(property): FaqItemContentInterface<FaqObject> {
     const contentList = {};
 
-    for (let i = 0; i < property.length; i++) {
-      contentList[i] = this.currentObjectConfig[property[i]];
+    for (let i = 0; i < property.content.length; i++) {
+      contentList[i] = this.currentObjectConfig[property.content[i]];
     }
 
     return contentList;
   }
 
-  setInitialStateData(object) {
+  setInitialStateData(object: FaqItemContentInterface<FaqObject>) {
     this.currentObjectConfig = object;
   }
 
-  getInitialStateData() {
+  getInitialStateData(): FaqItemContentInterface<FaqObject> {
     return this.currentObjectConfig;
   }
 

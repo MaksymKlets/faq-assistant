@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FaqItemContentInterface} from './faq-assistant/interfaces/faq-item.interface';
+import {FaqItemContentInterface, FaqObject} from './faq-assistant/interfaces/faq-item.interface';
 import {EntryComponent} from './faq-assistant/components/entry/entry.component';
 
 @Component({
@@ -8,14 +8,14 @@ import {EntryComponent} from './faq-assistant/components/entry/entry.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  data = {
+  data: FaqItemContentInterface<FaqObject> = {
     0: {
       title: 'Zero item',
       content: EntryComponent
     },
     1: {
       title: 'First item',
-      content: [2, 3]
+      content: [0, 2]
     },
     2: {
       title: 'Second item',

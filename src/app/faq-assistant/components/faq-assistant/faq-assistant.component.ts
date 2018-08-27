@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {FaqItemContentInterface} from '../../interfaces/faq-item.interface';
+import {FaqItemContentInterface, FaqObject} from '../../interfaces/faq-item.interface';
 import {FaqItemListService} from '../../services/faq-item.service';
 import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
 
@@ -20,19 +20,19 @@ import {CommunicationFaqAssistantService} from '../../services/communication-faq
 })
 export class FaqAssistantComponent implements OnInit {
 
-  titleList: object;
-  items: Array<object>;
+  titleList: FaqItemContentInterface<FaqObject>;
+  items: object[];
   showFinish = false;
   lastStep: boolean;
   showBack = false;
-  answer: string;
+  answer: string | object;
   componentRef: any;
   stateFaqContainer: Subscription;
   isContainerVisible = false;
-  indexConfigList: Array<string>;
+  indexConfigList: string[];
 
   @Input() customClass: string;
-  @Input() data: FaqItemContentInterface[];
+  @Input() data: FaqItemContentInterface<FaqObject>;
   @Input() params: any;
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
@@ -74,9 +74,9 @@ export class FaqAssistantComponent implements OnInit {
     this.answer = '';
   }
 
-  private setTitle(item): void {
+  private setTitle(item: FaqObject): void {
     if (Array.isArray(item.content)) {
-      this.titleList = this.itemManager.getItemsById(item.content);
+      this.titleList = this.itemManager.getItemsById(item);
       this.indexConfigList = Object.keys(this.titleList);
       this.itemManager.setPipeLineItem(item);
       this.showBack = true;
@@ -103,25 +103,25 @@ export class FaqAssistantComponent implements OnInit {
     this.items = this.itemManager.getItems();
 
     if (this.lastStep) {
-      const lastItem = this.itemManager.getLastItem();
+      const lastItem: object = this.itemManager.getLastItem();
 
       if (this.items.length === 1) {
         this.setInitialStateData();
       } else {
-        this.titleList = this.itemManager.getItemsById(lastItem.content);
+        this.titleList = this.itemManager.getItemsById(lastItem);
         this.indexConfigList = Object.keys(this.titleList);
       }
 
       this.showFinish = false;
       this.lastStep = false;
     } else {
-      const lastItem = this.itemManager.getLastItem();
+      const lastItem: object = this.itemManager.getLastItem();
       this.itemManager.removeLastItem();
 
       if (this.items.length === 1) {
         this.setInitialStateData();
       } else {
-        this.titleList = this.itemManager.getItemsById(lastItem.content);
+        this.titleList = this.itemManager.getItemsById(lastItem);
         this.indexConfigList = Object.keys(this.titleList);
       }
     }
