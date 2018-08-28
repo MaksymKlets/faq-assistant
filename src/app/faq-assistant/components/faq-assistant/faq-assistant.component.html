@@ -6,29 +6,29 @@
           <div>Online help</div>
         </div>
         <div class="faq-assistant__content">
-          <div class="faq-assistant__inner" *ngIf="!showFinish">
+          <div class="faq-assistant__inner" *ngIf="!isShowFinish">
             <div class="faq-assistant__inner-title">Please, select your option:</div>
             <div class="faq-assistant__items">
               <ul>
-                <li class="faq-assistant__item" *ngFor="let item of indexConfigList">
-                  <div (click)="setTitle(titleList[item])">
+                <li class="faq-assistant__item" *ngFor="let item of indexTitleSortedList">
+                  <div (click)="setTitle(titleSortedList[item])">
                     <div class="faq-assistant__custom-radio-button"></div>
-                    <span>{{titleList[item].title}}</span>
+                    <span>{{titleSortedList[item]?.title}}</span>
                   </div>
                 </li>
               </ul>
               <div class="faq-assistant__navigations">
-                <button *ngIf="showBack" class="faq-assistant__btn-prev" (click)="back()">Back</button>
+                <button *ngIf="isShowBack" class="faq-assistant__btn-prev" (click)="previousStep()">Back</button>
               </div>
             </div>
           </div>
-          <div *ngIf="showFinish" class="faq-assistant__answer">
+          <div *ngIf="isShowFinish" class="faq-assistant__answer">
             <div class="faq-assistant__answer-detail">
               <div #finalAnswer></div>
-              <span [innerHTML]="answer"></span>
+              <span [innerHTML]="answerMessage"></span>
             </div>
             <div class="faq-assistant__navigations">
-              <button *ngIf="showBack" class="faq-assistant__btn-prev" (click)="back()">Back</button>
+              <button *ngIf="isShowBack" class="faq-assistant__btn-prev" (click)="previousStep()">Back</button>
             </div>
           </div>
         </div>

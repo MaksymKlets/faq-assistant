@@ -8,9 +8,9 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {FaqItemContentInterface, FaqObject} from '../../interfaces/faq-item.interface';
-import {FaqItemListService} from '../../services/faq-item.service';
 import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
+import {FaqItemListService} from '../../services/faq-item-list.service';
+import {Dictionary, FaqItem} from '../../interfaces/faq-item.interface';
 
 @Component({
   selector: 'app-faq-assistant',
@@ -19,21 +19,20 @@ import {CommunicationFaqAssistantService} from '../../services/communication-faq
   encapsulation: ViewEncapsulation.None
 })
 export class FaqAssistantComponent implements OnInit {
-
-  titleList: FaqItemContentInterface<FaqObject>;
-  items: object[];
-  showFinish = false;
-  lastStep: boolean;
-  showBack = false;
-  answer: string | object;
-  componentRef: any;
+  titleSortedList: Dictionary<FaqItem>;
   stateFaqContainer: Subscription;
   isContainerVisible = false;
-  indexConfigList: string[];
+  isShowFinish = false;
+  isShowBack = false;
+  isLastStep = false;
+  answerMessage: string | object;
+  indexTitleSortedList: string[];
+  componentRef: any;
 
   @Input() customClass: string;
-  @Input() data: FaqItemContentInterface<FaqObject>;
+  @Input() titleList: Dictionary<FaqItem>;
   @Input() params: any;
+  @Input() countTitle: number;
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
   ngOnInit() {
@@ -51,83 +50,89 @@ export class FaqAssistantComponent implements OnInit {
   ) {
   }
 
-  private createComponent(answer: any, params: any): void {
+  private createComponent(component: any, inputComponent: any): void {
     setTimeout(() => {
       this.finalAnswerContent.clear();
-      const factory = this.resolver.resolveComponentFactory(answer);
+      const factory = this.resolver.resolveComponentFactory(component);
       this.componentRef = this.finalAnswerContent.createComponent(factory);
-      this.componentRef.instance.data = params;
+      this.componentRef.instance.inputComponent = inputComponent;
     });
   }
 
+  private setInitialStateTitleList(countTitle: number): void {
+    const titleSortedList = {};
+    for (const title in this.titleList) {
+      if (parseInt(title, null) < countTitle) {
+        titleSortedList[title] = this.titleList[title];
+      }
+    }
+
+    this.titleSortedList = titleSortedList;
+    this.indexTitleSortedList = Object.keys(this.titleSortedList);
+  }
+
   private getTitleList(): void {
-    this.titleList = this.data;
+    this.setInitialStateTitleList(this.countTitle);
     this.itemManager.setInitialStateData(this.titleList);
-    this.indexConfigList = Object.keys(this.titleList);
-    this.itemManager.setPipeLineItem(this.titleList);
+    this.itemManager.setQueueItem(this.titleSortedList);
   }
 
   private clearDataComponent(): void {
     if (this.finalAnswerContent) {
       this.finalAnswerContent.clear();
     }
-    this.answer = '';
+    this.answerMessage = '';
   }
 
-  private setTitle(item: FaqObject): void {
+  private setTitle(item: FaqItem): void {
     if (Array.isArray(item.content)) {
-      this.titleList = this.itemManager.getItemsById(item);
-      this.indexConfigList = Object.keys(this.titleList);
-      this.itemManager.setPipeLineItem(item);
-      this.showBack = true;
+      this.titleSortedList = this.itemManager.getTitleById(item);
+      this.indexTitleSortedList = Object.keys(this.titleSortedList);
+      this.itemManager.setQueueItem(item);
+      this.isShowBack = true;
     } else if (typeof item.content === 'function') {
       this.createComponent(item.content, this.params);
-      this.showFinish = true;
-      this.showBack = true;
-      this.lastStep = true;
+      this.isShowFinish = true;
+      this.isShowBack = true;
+      this.isLastStep = true;
     } else {
-      this.answer = item.content;
-      this.showFinish = true;
-      this.showBack = true;
-      this.lastStep = true;
+      this.answerMessage = item.content;
+      this.isShowFinish = true;
+      this.isShowBack = true;
+      this.isLastStep = true;
     }
   }
 
-  private setInitialStateData() {
-    this.titleList = this.itemManager.getInitialStateData();
-    this.indexConfigList = Object.keys(this.titleList);
-  }
-
-  private back(): void {
+  private previousStep(): void {
     this.clearDataComponent();
-    this.items = this.itemManager.getItems();
+    const queueList = this.itemManager.getQueueList();
 
-    if (this.lastStep) {
-      const lastItem: object = this.itemManager.getLastItem();
+    if (this.isLastStep) {
+      const lastItem: object = this.itemManager.getLastQueueItem();
 
-      if (this.items.length === 1) {
-        this.setInitialStateData();
+      if (queueList.length === 1) {
+        this.setInitialStateTitleList(this.countTitle);
       } else {
-        this.titleList = this.itemManager.getItemsById(lastItem);
-        this.indexConfigList = Object.keys(this.titleList);
+        this.titleSortedList = this.itemManager.getTitleById(lastItem);
+        this.indexTitleSortedList = Object.keys(this.titleSortedList);
       }
 
-      this.showFinish = false;
-      this.lastStep = false;
+      this.isShowFinish = false;
+      this.isLastStep = false;
     } else {
-      const lastItem: object = this.itemManager.getLastItem();
-      this.itemManager.removeLastItem();
+      this.itemManager.removeLastQueueItem();
+      const lastItem: object = this.itemManager.getLastQueueItem();
 
-      if (this.items.length === 1) {
-        this.setInitialStateData();
+      if (queueList.length === 1) {
+        this.setInitialStateTitleList(this.countTitle);
       } else {
-        this.titleList = this.itemManager.getItemsById(lastItem);
-        this.indexConfigList = Object.keys(this.titleList);
+        this.titleSortedList = this.itemManager.getTitleById(lastItem);
+        this.indexTitleSortedList = Object.keys(this.titleSortedList);
       }
     }
 
-    if (this.items.length === 1) {
-      this.showBack = false;
+    if (queueList.length === 1) {
+      this.isShowBack = false;
     }
   }
 }

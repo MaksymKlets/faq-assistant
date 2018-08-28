@@ -1,8 +1,8 @@
-export interface FaqItemContentInterface<T> {
+export interface Dictionary<T> {
   [index: number]: T;
 }
 
-export interface FaqObject {
-  title: string;
-  content: string | object;
+export interface FaqItem {
+  title?: string;
+  content?: string | object;
 }

@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 import {FaqAssistantComponent} from './components/faq-assistant/faq-assistant.component';
 import {FaqAssistantButtonComponent} from './components/faq-assistant-button/faq-assistant-button.component';
-import {FaqItemListService} from './services/faq-item.service';
+import {FaqItemListService} from './services/faq-item-list.service';
 import {CommunicationFaqAssistantService} from './services/communication-faq-assistant.service';
 
 @NgModule({

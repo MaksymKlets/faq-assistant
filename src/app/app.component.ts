@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
-import {FaqItemContentInterface, FaqObject} from './faq-assistant/interfaces/faq-item.interface';
-import {EntryComponent} from './faq-assistant/components/entry/entry.component';
+import {
+  Dictionary,
+  FaqItem
+} from './faq-assistant/interfaces/faq-item.interface';
 
 @Component({
   selector: 'app-root',
@@ -8,22 +10,54 @@ import {EntryComponent} from './faq-assistant/components/entry/entry.component';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  data: FaqItemContentInterface<FaqObject> = {
+  data: Dictionary<FaqItem> = {
     0: {
-      title: 'Zero item',
-      content: EntryComponent
+      title: 'How to get started with FORMA?',
+      content: [3, 4, 5]
     },
     1: {
-      title: 'First item',
-      content: [0, 2]
+      title: 'How to register in FORM?',
+      content: [6, 7, 8]
     },
     2: {
-      title: 'Second item',
-      content: 'Here answer 2'
+      title: 'Who is this application for?',
+      content: [9, 10, 11]
     },
     3: {
-      title: 'Third item',
-      content: 'Here answer 3'
+      title: 'Trainer',
+      content: 'You are Trainer'
+    },
+    4: {
+      title: 'Client',
+      content: 'You are Client'
+    },
+    5: {
+      title: 'Investor',
+      content: 'You are Investor'
+    },
+    6: {
+      title: 'Trainer',
+      content: 'Find the button in the upper left corner and follow the specified steps'
+    },
+    7: {
+      title: 'Client',
+      content: 'Find the button in the upper left corner and follow the specified steps'
+    },
+    8: {
+      title: 'Investor',
+      content: 'We can do it for you'
+    },
+    9: {
+      title: 'Trainer',
+      content: 'For everyone who does or wants to go in for sports. You can find persons and train them.'
+    },
+    10: {
+      title: 'Client',
+      content: 'For everyone who does or wants to go in for sports. You can find the best trainer.'
+    },
+    11: {
+      title: 'Investor',
+      content: 'For everyone who does or wants to go in for sports. You can find good proposals for cooperation.'
     }
   };
 }
