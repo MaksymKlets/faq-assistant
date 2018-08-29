@@ -1,0 +1,38 @@
+<div class="faq-container">
+  <div [ngClass]="{'visibilityContainer': isContainerVisible}" class="container-box">
+    <div [ngClass]="customClass">
+      <div class="faq-assistant">
+        <div class="faq-assistant__header">
+          <div>Online help</div>
+        </div>
+        <div class="faq-assistant__content">
+          <div class="faq-assistant__inner" *ngIf="!isShowFinish">
+            <div class="faq-assistant__inner-title">Please, select your option:</div>
+            <div class="faq-assistant__items">
+              <ul>
+                <li class="faq-assistant__item" *ngFor="let item of indexTitleSortedList">
+                  <div (click)="setTitle(titleSortedList[item])">
+                    <div class="faq-assistant__custom-radio-button"></div>
+                    <span>{{titleSortedList[item]?.title}}</span>
+                  </div>
+                </li>
+              </ul>
+              <div class="faq-assistant__navigations">
+                <button *ngIf="isShowBack" class="faq-assistant__btn-prev" (click)="previousStep()">Back</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="isShowFinish" class="faq-assistant__answer">
+            <div class="faq-assistant__answer-detail">
+              <div #finalAnswer></div>
+              <span [innerHTML]="answerMessage"></span>
+            </div>
+            <div class="faq-assistant__navigations">
+              <button *ngIf="isShowBack" class="faq-assistant__btn-prev" (click)="previousStep()">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

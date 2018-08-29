@@ -1,0 +1,67 @@
+@import '../../styles/base/variables';
+
+.faq-container__btn-box {
+  transition: .2s ease-out;
+}
+
+.faq-button-container {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  z-index: 1000;
+}
+
+.faq-button-container__image-btn {
+  position: relative;
+  float: right;
+}
+
+.faq-button-container__message-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-size: cover;
+  opacity: 1;
+  max-width: 100px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transition: .3s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
+}
+
+.faq-button-container__close-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-size: cover;
+  opacity: 0;
+  max-width: 100px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transition: .3s;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
+}
+
+.faq-button-container__state-button .faq-button-container__message-icon {
+  opacity: 0;
+}
+
+.faq-button-container__state-button .faq-button-container__close-icon {
+  opacity: .8;
+}
+
+.faq-button-container__state-button .faq-button-container__close-icon-rotate {
+  transform: rotate(180deg);
+}
+
+.faq-button-container__state-button .faq-button-container__close-icon-rotate:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0 12px 4px, rgba(0, 0, 0, 0.15) 0px 0px 14px 8px;
+}
+
+.faq-button-container__message-icon:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0 12px 4px, rgba(0, 0, 0, 0.15) 0px 0px 14px 8px;
+}
+
+

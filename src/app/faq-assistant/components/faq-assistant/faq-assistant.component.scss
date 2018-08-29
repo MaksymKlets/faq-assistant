@@ -1,62 +1,47 @@
 @import '../../styles/base/variables';
 
 .faq-assistant li {
+  position: relative;
   list-style: none;
   cursor: pointer;
+  border: 1px solid $color-text-inner-title;
+  border-radius: 10px;
+  text-align: center;
+  transition: .3s ease-out;
+  overflow: hidden;
+}
+
+.faq-assistant li div {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.faq-assistant li:hover {
+  box-shadow: 0 5px 10px $color-box-shadow-item;
 }
 
 .container-box {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  opacity: 1;
-  transition: .3s ease-out;
+  opacity: 0;
+  transition: .5s ease-out;
 }
 
 .visibilityContainer {
-  opacity: 0;
+  opacity: 1;
 }
 
 .faq-container {
   position: fixed;
-  bottom: 5%;
+  bottom: 8%;
   right: 5%;
   z-index: 1000;
 }
 
 .faq-container__image-btn {
   float: right;
-}
-
-.faq-container__message-icon {
-  background: url(assets/message.png) no-repeat;
-  background-size: cover;
-  max-width: 100px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  transition: .3s;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
-}
-
-.faq-container__close-icon {
-  background: url(assets/close.jpg) no-repeat;
-  background-size: cover;
-  max-width: 100px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  transition: .3s;
-  transform: rotate(160deg);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
-}
-
-.faq-container__message-icon:hover {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 0 12px 4px, rgba(0, 0, 0, 0.15) 0px 0px 14px 8px;
-}
-
-.faq-container__btn-box {
-  transition: .2s ease-out;
 }
 
 .faq-container__opacity-btn {
@@ -79,12 +64,11 @@
   flex-direction: row;
   justify-content: space-around;
   padding: 26px 15px;
-  width: 350px;
   background: linear-gradient(to right, #04fcca, #3930fd 51%, #732ef3);
   box-shadow: 0 2px 3px $color-box-shadow;
   border-radius: 20px 20px 0 0;
   color: $color-text-white;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -102,7 +86,7 @@
   overflow: auto;
   height: 400px;
   width: 350px;
-  padding: 30px 15px 20px 15px;
+  padding: 20px 0 0 0;
   box-shadow: 0 2px 4px -1px;
   background: $color-text-white;
   background-size: 100%;
@@ -112,18 +96,16 @@
 }
 
 .faq-assistant__inner {
-  border: 1px solid $color-text-inner-item;
   border-radius: 20px;
   position: relative;
   width: 300px;
   height: 350px;
-  overflow: auto;
 }
 
 .faq-assistant__inner-title {
-  font-weight: bolder;
+  font-weight: 500;
   font-size: 16px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   padding: 16px 10px;
   color: $color-text-inner-title;
 }
@@ -131,9 +113,10 @@
 .faq-assistant__item {
   padding: 10px 0;
   color: $color-text-item;
-  font-size: 15px;
-  letter-spacing: 2px;
+  font-size: 14px;
+  letter-spacing: 1px;
   font-weight: 500;
+  margin: 10px 0;
 }
 
 .faq-assistant__items {
@@ -141,7 +124,13 @@
 }
 
 .faq-assistant__items ul {
-  padding: 16px 16px;
+  padding: 0;
+}
+
+.faq-assistant__items span {
+  padding-left: 45px;
+  text-align: left;
+  width: 90%;
 }
 
 .faq-assistant__btn-prev {
@@ -149,12 +138,10 @@
   height: 40px;
   border-radius: 5px;
   border: none;
-  background: -webkit-gradient(linear, left top, right top, from(#04fcca), color-stop(51%, #3930fd), to(#732ef3));
   background: linear-gradient(to right, #04fcca, #3930fd 51%, #732ef3);
   outline: none;
   cursor: pointer;
-  -webkit-box-shadow: 0 0 5px #8bbd8b;
-  box-shadow: 0 0 5px #8bbd8b;
+  box-shadow: 0 0 5px $color-box-shadow-btn;
   color: $color-text-white;
   margin-bottom: 10px;
 }
@@ -164,8 +151,6 @@
 }
 
 .faq-assistant__answer {
-  border: 1px solid $color-border-answer;
-  border-radius: 20px;
   position: relative;
   width: 300px;
   overflow: auto;
@@ -175,8 +160,20 @@
 }
 
 .faq-assistant__answer-detail {
-  padding: 20px;
   color: $color-border-answer-detail;
   font-size: 15px;
   font-weight: 500;
+}
+
+.faq-assistant__custom-radio-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  display: inline-block;
+  border: 3px solid $color-radio-button-item;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 4%;
+  pointer-events: none;
 }

@@ -1,0 +1,13 @@
+<div class="faq-button-container">
+  <div class="faq-container__btn-box">
+    <div [ngClass]="{'faq-button-container__state-button': isContainerVisible}"
+         class="faq-button-container__image-btn"
+         (click)="showHideFaqAssistantContainer()">
+      <img class="faq-button-container__message-icon"
+           src="https://s3.amazonaws.com/forma-assets/faq-assistant/message.png" alt="">
+      <img class="faq-button-container__close-icon"
+           [ngClass]="{'faq-button-container__close-icon-rotate': isContainerVisible}"
+           src="https://s3.amazonaws.com/forma-assets/faq-assistant/close.jpg" alt="">
+    </div>
+  </div>
+</div>
