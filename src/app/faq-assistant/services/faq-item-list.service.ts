@@ -11,10 +11,12 @@ export class FaqItemListService {
     this.queueList.push(index);
   }
 
-  getLastQueueItem(): number[] {
-    const lastItem = [];
-    lastItem.push(this.queueList[this.queueList.length - 1] || undefined);
-    return lastItem;
+  getLastQueueItem(): number | null {
+    if (!this.queueList.length) {
+      return null;
+    }
+
+    return this.queueList[this.queueList.length - 1];
   }
 
   removeLastQueueItem(): void {

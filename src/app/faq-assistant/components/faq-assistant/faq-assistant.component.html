@@ -10,7 +10,7 @@
             <div class="faq-assistant__inner-title">Please, select your option:</div>
             <div class="faq-assistant__items">
               <ul>
-                <li class="faq-assistant__item" *ngFor="let item of itemSortedList">
+                <li class="faq-assistant__item" *ngFor="let item of displayItemList">
                   <div (click)="setNextItem(itemList[item], item)">
                     <div class="faq-assistant__custom-radio-button"></div>
                     <span>{{itemList[item].title}}</span>

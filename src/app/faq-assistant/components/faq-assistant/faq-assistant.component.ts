@@ -10,7 +10,10 @@ import {
 import {Subscription} from 'rxjs/Subscription';
 import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
 import {FaqItemListService} from '../../services/faq-item-list.service';
-import {Dictionary, FaqItem} from '../../interfaces/faq-item.interface';
+import {
+  Dictionary,
+  FaqItem
+} from '../../interfaces/faq-item.interface';
 
 @Component({
   selector: 'app-faq-assistant',
@@ -19,7 +22,7 @@ import {Dictionary, FaqItem} from '../../interfaces/faq-item.interface';
   encapsulation: ViewEncapsulation.None
 })
 export class FaqAssistantComponent implements OnInit {
-  itemSortedList: any;
+  displayItemList: number[];
   stateFaqContainer: Subscription;
   isContainerVisible = false;
   isShowFinishContainer = false;
@@ -30,8 +33,7 @@ export class FaqAssistantComponent implements OnInit {
 
   @Input() customClass: string;
   @Input() itemList: Dictionary<FaqItem>;
-  @Input() params: any;
-  @Input() displayItemList: number[];
+  @Input() initialItemList: number[];
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
   constructor(
@@ -43,18 +45,17 @@ export class FaqAssistantComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemSortedList = this.displayItemList;
+    this.displayItemList = this.initialItemList;
     this.stateFaqContainer = this.communicationFaqAssistantService.receiveVisibilityState().subscribe(stateContainer => {
       this.isContainerVisible = stateContainer;
     });
   }
 
-  private createComponent(component: any, inputComponent: any): void {
+  private createComponent(component: any): void {
     setTimeout(() => {
       this.finalAnswerContent.clear();
       const factory = this.resolver.resolveComponentFactory(component);
       this.componentRef = this.finalAnswerContent.createComponent(factory);
-      this.componentRef.instance.inputComponent = inputComponent;
     });
   }
 
@@ -67,14 +68,14 @@ export class FaqAssistantComponent implements OnInit {
 
   setNextItem(item: FaqItem, index: number): void {
     if (Array.isArray(item.content)) {
-      this.itemSortedList = item.content;
+      this.displayItemList = item.content;
       this.itemManager.setQueueItem(index);
       this.isShowBackButton = true;
       return;
     }
 
     if (typeof item.content === 'function') {
-      this.createComponent(item.content, this.params);
+      this.createComponent(item.content);
     } else {
       this.answerMessage = item.content;
     }
@@ -89,14 +90,17 @@ export class FaqAssistantComponent implements OnInit {
 
     if (!this.isLastStep) {
       this.itemManager.removeLastQueueItem();
-      this.itemSortedList = this.itemManager.getLastQueueItem();
+      const prevItemIndex = this.itemManager.getLastQueueItem();
 
-      if (this.itemSortedList[0] === undefined) {
-        this.itemSortedList = this.displayItemList;
+      if (prevItemIndex === null) {
+        this.displayItemList = this.initialItemList;
         this.isShowBackButton = false;
         return;
-      } else if (Array.isArray(this.itemList[this.itemSortedList[0]].content)) {
-        this.itemSortedList = this.itemList[this.itemSortedList].content;
+      }
+
+      if (Array.isArray(this.itemList[prevItemIndex].content)) {
+        const contentItem = this.itemList[prevItemIndex].content as number[];
+        this.displayItemList = contentItem;
       }
       return;
     }
