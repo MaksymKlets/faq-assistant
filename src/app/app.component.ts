@@ -57,7 +57,7 @@ export class AppComponent {
     },
     11: {
       title: 'Investor',
-      content: 'For everyone who does or wants to go in for sports. You can find good proposals for cooperation.'
+      content: [8]
     }
   };
 }

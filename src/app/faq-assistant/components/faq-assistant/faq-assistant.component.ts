@@ -19,28 +19,20 @@ import {Dictionary, FaqItem} from '../../interfaces/faq-item.interface';
   encapsulation: ViewEncapsulation.None
 })
 export class FaqAssistantComponent implements OnInit {
-  titleSortedList: Dictionary<FaqItem>;
+  itemSortedList: any;
   stateFaqContainer: Subscription;
   isContainerVisible = false;
-  isShowFinish = false;
-  isShowBack = false;
+  isShowFinishContainer = false;
+  isShowBackButton = false;
   isLastStep = false;
   answerMessage: string | object;
-  indexTitleSortedList: string[];
   componentRef: any;
 
   @Input() customClass: string;
-  @Input() titleList: Dictionary<FaqItem>;
+  @Input() itemList: Dictionary<FaqItem>;
   @Input() params: any;
-  @Input() countTitle: number;
+  @Input() displayItemList: number[];
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
-
-  ngOnInit() {
-    this.getTitleList();
-    this.stateFaqContainer = this.communicationFaqAssistantService.receiveVisibilityState().subscribe(stateContainer => {
-      this.isContainerVisible = stateContainer;
-    });
-  }
 
   constructor(
     private itemManager: FaqItemListService,
@@ -48,6 +40,13 @@ export class FaqAssistantComponent implements OnInit {
     private resolver: ComponentFactoryResolver,
     private communicationFaqAssistantService: CommunicationFaqAssistantService
   ) {
+  }
+
+  ngOnInit() {
+    this.itemSortedList = this.displayItemList;
+    this.stateFaqContainer = this.communicationFaqAssistantService.receiveVisibilityState().subscribe(stateContainer => {
+      this.isContainerVisible = stateContainer;
+    });
   }
 
   private createComponent(component: any, inputComponent: any): void {
@@ -59,80 +58,50 @@ export class FaqAssistantComponent implements OnInit {
     });
   }
 
-  private setInitialStateTitleList(countTitle: number): void {
-    const titleSortedList = {};
-    for (const title in this.titleList) {
-      if (parseInt(title, null) < countTitle) {
-        titleSortedList[title] = this.titleList[title];
-      }
-    }
-
-    this.titleSortedList = titleSortedList;
-    this.indexTitleSortedList = Object.keys(this.titleSortedList);
-  }
-
-  private getTitleList(): void {
-    this.setInitialStateTitleList(this.countTitle);
-    this.itemManager.setInitialStateData(this.titleList);
-    this.itemManager.setQueueItem(this.titleSortedList);
-  }
-
-  private clearDataComponent(): void {
+  private clearResult(): void {
     if (this.finalAnswerContent) {
       this.finalAnswerContent.clear();
     }
     this.answerMessage = '';
   }
 
-  private setTitle(item: FaqItem): void {
+  setNextItem(item: FaqItem, index: number): void {
     if (Array.isArray(item.content)) {
-      this.titleSortedList = this.itemManager.getTitleById(item);
-      this.indexTitleSortedList = Object.keys(this.titleSortedList);
-      this.itemManager.setQueueItem(item);
-      this.isShowBack = true;
-    } else if (typeof item.content === 'function') {
+      this.itemSortedList = item.content;
+      this.itemManager.setQueueItem(index);
+      this.isShowBackButton = true;
+      return;
+    }
+
+    if (typeof item.content === 'function') {
       this.createComponent(item.content, this.params);
-      this.isShowFinish = true;
-      this.isShowBack = true;
-      this.isLastStep = true;
     } else {
       this.answerMessage = item.content;
-      this.isShowFinish = true;
-      this.isShowBack = true;
-      this.isLastStep = true;
     }
+
+    this.isShowFinishContainer = true;
+    this.isShowBackButton = true;
+    this.isLastStep = true;
   }
 
-  private previousStep(): void {
-    this.clearDataComponent();
-    const queueList = this.itemManager.getQueueList();
+  setPreviousItem(): void {
+    this.clearResult();
 
-    if (this.isLastStep) {
-      const lastItem: object = this.itemManager.getLastQueueItem();
-
-      if (queueList.length === 1) {
-        this.setInitialStateTitleList(this.countTitle);
-      } else {
-        this.titleSortedList = this.itemManager.getTitleById(lastItem);
-        this.indexTitleSortedList = Object.keys(this.titleSortedList);
-      }
-
-      this.isShowFinish = false;
-      this.isLastStep = false;
-    } else {
+    if (!this.isLastStep) {
       this.itemManager.removeLastQueueItem();
-      const lastItem: object = this.itemManager.getLastQueueItem();
+      this.itemSortedList = this.itemManager.getLastQueueItem();
 
-      if (queueList.length === 1) {
-        this.setInitialStateTitleList(this.countTitle);
-      } else {
-        this.titleSortedList = this.itemManager.getTitleById(lastItem);
-        this.indexTitleSortedList = Object.keys(this.titleSortedList);
+      if (this.itemSortedList[0] === undefined) {
+        this.itemSortedList = this.displayItemList;
+        this.isShowBackButton = false;
+        return;
+      } else if (Array.isArray(this.itemList[this.itemSortedList[0]].content)) {
+        this.itemSortedList = this.itemList[this.itemSortedList].content;
       }
+      return;
     }
 
-    if (queueList.length === 1) {
-      this.isShowBack = false;
-    }
+    this.isShowFinishContainer = false;
+    this.isLastStep = false;
   }
 }

@@ -1,4 +1,4 @@
-@import '../../styles/base/variables';
+@import '../../styles/variables';
 
 .faq-container__btn-box {
   transition: .2s ease-out;
@@ -25,6 +25,7 @@
   max-width: 100px;
   width: 60px;
   height: 60px;
+  cursor: pointer;
   border-radius: 50%;
   transition: .3s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
@@ -39,6 +40,7 @@
   max-width: 100px;
   width: 60px;
   height: 60px;
+  cursor: pointer;
   border-radius: 50%;
   transition: .3s;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px 7px, rgba(0, 0, 0, 0.15) 0px 3px 5px 0px;
