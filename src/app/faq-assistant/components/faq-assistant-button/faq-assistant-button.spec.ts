@@ -9,7 +9,7 @@ describe('FaqAssistantButtonComponent', function () {
   it('isContainerVisible should has "false" value', () => {
     const faqButton = new FaqAssistantButtonComponent(new FaqAssistantService());
 
-    expect(faqButton.isContainerVisible).toEqual(false);
+    expect(faqButton.isContainerVisible).not.toEqual(true);
   });
 
   it('showHideFaqAssistantContainer method should change isContainerVisible value to true', () => {
