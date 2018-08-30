@@ -3,17 +3,17 @@ import {Observable} from 'rxjs';
 import {Subject} from 'rxjs/Subject';
 
 @Injectable()
-export class CommunicationFaqAssistantService {
+export class FaqAssistantService {
   private visibilityContainer = new Subject<boolean>();
 
   constructor() {
   }
 
-  sendVisibilityState(state: boolean): void {
+  setVisibilityState(state: boolean): void {
     this.visibilityContainer.next(state);
   }
 
-  receiveVisibilityState(): Observable<boolean> {
+  getVisibilityState(): Observable<boolean> {
     return this.visibilityContainer.asObservable();
   }
 }

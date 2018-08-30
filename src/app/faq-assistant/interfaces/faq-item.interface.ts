@@ -1,8 +1,8 @@
 export interface Dictionary<T> {
-  [index: number]: T;
+  [index: string]: T;
 }
 
 export interface FaqItem {
   title?: string;
-  content?: string | object | number[];
+  content?: string | number[];
 }

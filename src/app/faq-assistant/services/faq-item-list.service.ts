@@ -20,6 +20,6 @@ export class FaqItemListService {
   }
 
   removeLastQueueItem(): void {
-    this.queueList.splice(-1, 1);
+    this.queueList.pop();
   }
 }

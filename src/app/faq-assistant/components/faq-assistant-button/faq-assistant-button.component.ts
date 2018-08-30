@@ -1,24 +1,20 @@
-import {
-  Component,
-  ViewEncapsulation
-} from '@angular/core';
-import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
+import {Component} from '@angular/core';
+import {FaqAssistantService} from '../../services/faq-assistant.service';
 
 @Component({
   selector: 'app-faq-assistant-button',
   templateUrl: './faq-assistant-button.component.html',
-  styleUrls: ['./faq-assistant-button.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./faq-assistant-button.component.scss']
 })
 export class FaqAssistantButtonComponent {
 
   isContainerVisible = false;
 
-  constructor(private communicationFaqAssistantService: CommunicationFaqAssistantService) {
+  constructor(private faqAssistantService: FaqAssistantService) {
   }
 
-  showHideFaqAssistantContainer(): void {
+  toggleFaqAssistantContainer(): void {
     this.isContainerVisible = !this.isContainerVisible;
-    this.communicationFaqAssistantService.sendVisibilityState(this.isContainerVisible);
+    this.faqAssistantService.setVisibilityState(this.isContainerVisible);
   }
 }

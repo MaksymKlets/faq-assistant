@@ -1,25 +1,17 @@
 import {
   Component,
   OnInit,
-  Input,
-  ViewChild,
-  ViewContainerRef,
-  ComponentFactoryResolver,
-  ViewEncapsulation
+  Input
 } from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
-import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
+import {FaqAssistantService} from '../../services/faq-assistant.service';
 import {FaqItemListService} from '../../services/faq-item-list.service';
-import {
-  Dictionary,
-  FaqItem
-} from '../../interfaces/faq-item.interface';
+import {Dictionary, FaqItem} from '../../interfaces/faq-item.interface';
 
 @Component({
   selector: 'app-faq-assistant',
   templateUrl: './faq-assistant.component.html',
-  styleUrls: ['./faq-assistant.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./faq-assistant.component.scss']
 })
 export class FaqAssistantComponent implements OnInit {
   displayItemList: number[];
@@ -28,42 +20,28 @@ export class FaqAssistantComponent implements OnInit {
   isShowFinishContainer = false;
   isShowBackButton = false;
   isLastStep = false;
-  answerMessage: string | object;
-  componentRef: any;
+  answerMessage: string;
 
   @Input() customClass: string;
   @Input() itemList: Dictionary<FaqItem>;
   @Input() initialItemList: number[];
-  @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
   constructor(
     private faqItemListService: FaqItemListService,
-    private viewContainerRef: ViewContainerRef,
-    private resolver: ComponentFactoryResolver,
-    private communicationFaqAssistantService: CommunicationFaqAssistantService
+    private faqAssistantService: FaqAssistantService
   ) {
   }
 
   ngOnInit() {
-    this.displayItemList = this.initialItemList;
-    this.stateFaqContainer = this.communicationFaqAssistantService.receiveVisibilityState().subscribe(stateContainer => {
+    if (!this.initialItemList) {
+      this.displayItemList = [];
+    } else {
+      this.displayItemList = this.initialItemList;
+    }
+
+    this.stateFaqContainer = this.faqAssistantService.getVisibilityState().subscribe(stateContainer => {
       this.isContainerVisible = stateContainer;
     });
-  }
-
-  private createComponent(component: any): void {
-    setTimeout(() => {
-      this.finalAnswerContent.clear();
-      const factory = this.resolver.resolveComponentFactory(component);
-      this.componentRef = this.finalAnswerContent.createComponent(factory);
-    });
-  }
-
-  private clearResult(): void {
-    if (this.finalAnswerContent) {
-      this.finalAnswerContent.clear();
-    }
-    this.answerMessage = '';
   }
 
   setNextItem(item: FaqItem, index: number): void {
@@ -74,9 +52,7 @@ export class FaqAssistantComponent implements OnInit {
       return;
     }
 
-    if (typeof item.content === 'function') {
-      this.createComponent(item.content);
-    } else {
+    if (typeof item.content === 'string') {
       this.answerMessage = item.content;
     }
 
@@ -86,8 +62,6 @@ export class FaqAssistantComponent implements OnInit {
   }
 
   setPreviousItem(): void {
-    this.clearResult();
-
     if (!this.isLastStep) {
       this.faqItemListService.removeLastQueueItem();
       const prevItemIndex = this.faqItemListService.getLastQueueItem();
@@ -107,5 +81,6 @@ export class FaqAssistantComponent implements OnInit {
 
     this.isShowFinishContainer = false;
     this.isLastStep = false;
+    this.answerMessage = '';
   }
 }

@@ -1,5 +1,5 @@
 import {FaqAssistantButtonComponent} from './faq-assistant-button.component';
-import {CommunicationFaqAssistantService} from '../../services/communication-faq-assistant.service';
+import {CommunicationFaqAssistantService} from '../../services/faq-assistant.service';
 
 describe('FaqAssistantButtonComponent', function () {
   it('should create instance of FaqAssistantButtonComponent', () => {
