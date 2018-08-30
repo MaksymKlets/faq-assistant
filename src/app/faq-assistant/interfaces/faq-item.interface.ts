@@ -4,5 +4,5 @@ export interface Dictionary<T> {
 
 export interface FaqItem {
   title?: string;
-  content?: string | object;
+  content?: string | object | number[];
 }

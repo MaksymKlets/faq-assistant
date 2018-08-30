@@ -37,7 +37,7 @@ export class FaqAssistantComponent implements OnInit {
   @ViewChild('finalAnswer', {read: ViewContainerRef}) finalAnswerContent: ViewContainerRef;
 
   constructor(
-    private itemManager: FaqItemListService,
+    private faqItemListService: FaqItemListService,
     private viewContainerRef: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
     private communicationFaqAssistantService: CommunicationFaqAssistantService
@@ -69,7 +69,7 @@ export class FaqAssistantComponent implements OnInit {
   setNextItem(item: FaqItem, index: number): void {
     if (Array.isArray(item.content)) {
       this.displayItemList = item.content;
-      this.itemManager.setQueueItem(index);
+      this.faqItemListService.setQueueItem(index);
       this.isShowBackButton = true;
       return;
     }
@@ -89,8 +89,8 @@ export class FaqAssistantComponent implements OnInit {
     this.clearResult();
 
     if (!this.isLastStep) {
-      this.itemManager.removeLastQueueItem();
-      const prevItemIndex = this.itemManager.getLastQueueItem();
+      this.faqItemListService.removeLastQueueItem();
+      const prevItemIndex = this.faqItemListService.getLastQueueItem();
 
       if (prevItemIndex === null) {
         this.displayItemList = this.initialItemList;
